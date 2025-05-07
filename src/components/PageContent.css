@@ -1,0 +1,227 @@
+/* PageContent.css */
+
+.page-content {
+    padding: 15rem 3rem 10rem;
+    /* Add top padding for fixed navbar */
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    /* Start hidden for animation */
+    transform: translateY(50px);
+    /* Start lower */
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* Animation class (triggered by a potential IntersectionObserver or just on mount) */
+.page-content.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.page-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+    color: var(--true-white);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* Text outline with less neon */
+    -webkit-text-stroke: 1px var(--strong-red);
+    text-stroke: 1px var(--strong-red);
+    color: transparent;
+    mix-blend-mode: lighten;
+}
+
+.page-text {
+    font-size: 1.6rem;
+    color: var(--silver-grey);
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 3rem;
+}
+
+/* Specific styles for tracking form */
+.tracking-form {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.tracking-input {
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.8rem;
+    font-size: 1.3rem;
+    color: var(--true-white);
+    background-color: rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.tracking-input:focus {
+    outline: none;
+    border-color: var(--strong-red);
+    box-shadow: 0 0 0 5px rgba(178, 34, 34, 0.2), 0 0 10px var(--strong-red);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tracking-button {
+    padding: 1.5rem 3rem;
+    background: var(--strong-red);
+    color: var(--true-white);
+    font-weight: bold;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4), 0 0 10px var(--strong-red);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+
+.tracking-button:hover {
+    background: #A52A2A;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.5), 0 0 15px var(--strong-red);
+}
+
+/* Specific styles for service details */
+.service-details-grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 4rem;
+}
+
+.service-detail-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 1rem;
+    padding: 3rem;
+    text-align: left;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-detail-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.service-detail-card h3 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    color: var(--true-white);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.service-detail-card p {
+    font-size: 1.2rem;
+    color: var(--silver-grey);
+}
+
+.service-icon {
+    margin-bottom: 1.5rem;
+    color: var(--sophisticated-cyan);
+    /* You can keep this accent */
+}
+
+
+/* Specific styles for contact details */
+.contact-details-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--text-on-dark);
+    font-family: 'Roboto', sans-serif;
+}
+
+.contact-item svg {
+    color: var(--strong-red);
+    /* Use strong red for contact icons */
+}
+
+/* Specific styles for page quote form */
+.page-form .form {
+    max-width: 700px;
+    /* Limit width for the form on its own page */
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+
+/* Responsive adjustments for PageContent */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 12rem 1.5rem 8rem;
+    }
+
+    .page-title {
+        font-size: 3rem;
+    }
+
+    .page-text {
+        font-size: 1.4rem;
+    }
+
+    .tracking-form {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .tracking-input {
+        max-width: 100%;
+    }
+
+    .tracking-button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .service-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-detail-card {
+        padding: 2.5rem;
+        text-align: center;
+        /* Center text on smaller screens */
+    }
+
+    .contact-details-layout {
+        gap: 1.5rem;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        /* Stack icon and text */
+        gap: 0.8rem;
+    }
+
+    .contact-item svg {
+        margin-bottom: 0.5rem;
+    }
+
+    .page-form .form {
+        max-width: 100%;
+    }
+
+}
