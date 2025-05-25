@@ -12,9 +12,32 @@ a{
   text-decoration: none;
 }
 
+.nav-button {
+  margin: 0 10px;
+  padding: 0.5rem 1rem;
+  border: 5px solid var(--light-grey);
+  background-color: var(--sophisticated-cyan);
+  color: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-button:hover {
+  background-color: var(--dark-navy);
+}
+
+.nav-button:focus {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
 /* General Body and Page Styling */
 body {
-  margin: 0;
+  margin: 0px;
+  padding: 0px;
   font-family: 'Roboto', sans-serif; /* A clean, modern, yet classic font */
   background-color: var(--dark-navy);
   color: var(--text-color);
@@ -239,7 +262,7 @@ body {
 
 /* Services Section (Cards) */
 .services {
-  padding: 7rem 2rem; /* More padding */
+  padding: 2rem; /* More padding */
   background-color: var(--dark-navy);
   position: relative;
   z-index: 0;
@@ -286,13 +309,16 @@ body {
 }
 
 /* Facts cards grid */
+.facts-section{
+  gap: 0px;
+  padding: 0;
+}
+
 .facts-cards {
-
-
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr; 
   grid-template-rows: 1fr 1fr 1fr; 
-  gap: 0px 0px; 
+  gap: 20px;
   grid-template-areas: 
     "bg-secondary bg-info bg-success-"
     "bg-primary bg-primary bg-primary"
@@ -301,10 +327,10 @@ body {
 
 /* Individual card styles */
 .fact-card {
-  flex: 1 1 200px;
-  min-width: 200px;
+  flex: 1 1 100%;
+  width: 90%;
   padding: 20px;
-  border-radius: 8px;
+  border-radius:3px;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -319,12 +345,26 @@ body {
   transform: translateY(-5px);
 }
 
-.about_section{
- gap: 20px
+.about-section{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ gap: 0px 25px; 
 }
 
+.about-section img{
+  width: 90%;
+  filter: brightness(95%);
+}
+
+
+.about-section p {
+  padding: 0px 40px;
+}
 /* Background colors for cards */
 .bg-primary {
+  width: 97%;
   background-color: transparent; /* dark blue */
   grid-area: bg-primary;
 }
@@ -340,7 +380,7 @@ body {
 }
 
 .bg-success {
-  background-color: #28a745; /* green */
+  background-color: #00B0B0; /* green */
    grid-area: bg-success-;
 }
 
@@ -369,8 +409,8 @@ body {
 /* Responsive adjustments */
 @media(max-width: 768px) {
   .facts-cards {
+    display: flex;
     flex-direction: column;
-    align-items: center;
   }
 }
 
@@ -640,6 +680,13 @@ button {
     display: none; /* Keep mobile menu toggle functionality separate */
   }
 
+
+  .hero-content{
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+  }
+
   .hero-title {
     font-size: 2.8rem;
   }
@@ -649,6 +696,8 @@ button {
   }
 
   .hero-buttons {
+    width: 80%;
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;

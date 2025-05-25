@@ -3,6 +3,7 @@ import { Truck, Phone, Mail } from "lucide-react";
 import './App.css';
 import CountUp from 'react-countup';
 import logo from './source/logo.png'; 
+import aboutus from './source/aboutus.jpg'; 
 import { useInView } from 'react-intersection-observer';
 
 export default function App() {
@@ -303,7 +304,7 @@ function MainPage({ onAboutClick }) {
         </div> 
       <div className="fact-card bg-primary">
           <div className="icon"><i className="fas fa-headset"></i></div>
-          <div  classNameasse="fact-number"><a href="tel:+1 (630) 230 6928" className="fact_number_css">+1 (630) 230 6928</a></div>
+          <div  className="fact-number"><a href="tel:+1 (630) 230 6928" className="fact_number_css">+1 (630) 230 6928</a></div>
           <div className="fact-label">Have a question? Giveus a call!</div>
         </div>
       </div>
@@ -363,10 +364,10 @@ function MainPage({ onAboutClick }) {
         </div>
       </div>
       {/* Optional controls */}
-      <div style={{ marginTop: '1rem' }}>
-        <button onClick={handlePrev} style={{ margin: '0 10px', padding: '0.5rem 1rem' }}>Prev</button>
-        <button onClick={handleNext} style={{ margin: '0 10px', padding: '0.5rem 1rem' }}>Next</button>
-      </div>
+      <div style={{ marginTop: '1rem'}}>
+  <button onClick={handlePrev} className="nav-button">Prev</button>
+  <button onClick={handleNext} className="nav-button">Next</button>
+</div>
     </section>
       {/* Your full main page content: */}
       <section id="contact" className="quote-form-section">
@@ -458,6 +459,7 @@ function AboutUsPage({ onBack }) {
     <main className="page">
       <section className="about-section">
         <h2 className="section-title">About Us</h2>
+        <img src={aboutus} alt="" />
         <p className="about-text">
          At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
 
