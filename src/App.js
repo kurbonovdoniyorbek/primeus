@@ -1,7 +1,9 @@
 import React, { useState, useEffect,useRef } from "react";
 import { Truck, Phone, Mail } from "lucide-react";
 import './App.css';
-// import logo from './logo.png'; // optional
+import CountUp from 'react-countup';
+import logo from './source/logo.png'; 
+import { useInView } from 'react-intersection-observer';
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -25,8 +27,7 @@ export default function App() {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-logo">
-            {/* <img src={logo} alt="Prime Us Inc Carrier Logo" /> */}
-            <span>Prime Us Inc Carrier</span>
+          <a href="/"><img src={logo} alt="Prime Us Inc Carrier Logo" /></a>
           </div>
           <ul className="navbar-links">
             {page !== 'home' && (
@@ -36,11 +37,11 @@ export default function App() {
             )}
             {page !== 'about' && (
               <li><button onClick={() => handleNavigate('about')} className="nav-button">
-            <li><a href="#contact">About us</a></li>
+            <li><a href="#about">ABOUT US</a></li>
                 </button></li>
             )}
             <li><a href="#services">Services</a></li>
-            <li><a href="#quote">Contact Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
           </ul>
         </div>
       </nav>
@@ -86,6 +87,10 @@ function MainPage({ onAboutClick }) {
   const slideRef = useRef(null);
   const transitionRef = useRef(null);
   const autoSlideRef = useRef(null);
+   const { ref, inView } = useInView({
+    triggerOnce: true, // start counting only once
+    threshold: 0.5,     // 50% of the element is visible
+  });
 
   // Clone first and last few slides for infinite looping
   const extendedTestimonials = [
@@ -109,11 +114,19 @@ function MainPage({ onAboutClick }) {
   };
 
   const handleNext = () => {
-    setCurrentIndex(prev => prev + 1);
+   if(currentIndex === totalSlides.length){ 
+    setCurrentIndex(0)
+   }else{
+     setCurrentIndex(prev => prev + 1);
+   }
   };
 
   const handlePrev = () => {
-    setCurrentIndex(prev => prev - 1);
+     if(currentIndex === 0){ 
+    setCurrentIndex(totalSlides.length)
+   }else{
+     setCurrentIndex(prev => prev - 1);
+   }
   };
 
   // Handle transition end to loop seamlessly
@@ -238,8 +251,8 @@ function MainPage({ onAboutClick }) {
             Prime Us Inc Carrier provides unparalleled freight transportation services across the nation. Experience reliability, efficiency, and dedicated support for all your logistics needs.
           </p>
           <div className="hero-buttons">
-            <a href="#quote" className="btn btn-primary">Contact us</a>
-            <a href="#contact" className="btn btn-secondary">About Us</a>
+            <a href="#contact" className="btn btn-primary">Contact us</a>
+            <a href="#about" className="btn btn-secondary">About Us</a>
           </div>
         </div>
       </section>
@@ -266,6 +279,35 @@ function MainPage({ onAboutClick }) {
           </div>
         </div>
       </section>
+
+       <div className="facts-section container">
+      <h6 className="section-title">Prime Us incorporated</h6>
+      <h2 className="section-heading">Simplify, Track, and Manage All Your Shipments in One Place</h2>
+      <p className="section-description">
+      We take pride in our transparent approach, giving customers full visibility into our performance. Our easy-to-use platform allows clients to track every shipment and see the number of loads we've delivered successfully. This openness not only provides valuable insights but also builds trust in our consistent commitment to exceptional service.
+      </p>
+      
+      <div className="facts-cards">
+      
+        <div className="fact-card bg-secondary">
+          <div className="fact-number" ref={ref}> {inView && <CountUp end={3334} duration={2} />}</div>
+          <div className="fact-label">Happy Clients</div>
+        </div>
+        <div className="fact-card bg-info">
+           <div className="fact-number" ref={ref}>{inView && <CountUp end={186} duration={2} />}</div>
+          <div className="fact-label">Monthly Completed Shipments</div>
+        </div>
+        <div className="fact-card bg-success">
+          <div className="fact-number" ref={ref}>{inView && <CountUp end={389} duration={2} />}</div>
+          <div className="fact-label">Customer Feedback</div>
+        </div> 
+      <div className="fact-card bg-primary">
+          <div className="icon"><i className="fas fa-headset"></i></div>
+          <div  classNameasse="fact-number"><a href="tel:+1 (630) 230 6928" className="fact_number_css">+1 (630) 230 6928</a></div>
+          <div className="fact-label">Have a question? Giveus a call!</div>
+        </div>
+      </div>
+    </div>
 
       {/* Testimonials */}
       <section style={{ padding: '7rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
@@ -327,7 +369,7 @@ function MainPage({ onAboutClick }) {
       </div>
     </section>
       {/* Your full main page content: */}
-      <section id="quote" className="quote-form-section">
+      <section id="contact" className="quote-form-section">
         <div className="quote-form-container">
           <h2 className="quote-title">Contact US</h2>
           <p className="quote-text">Fill out our form and we’ll get back to you shortly with a tailored logistics proposal.</p>
@@ -417,7 +459,13 @@ function AboutUsPage({ onBack }) {
       <section className="about-section">
         <h2 className="section-title">About Us</h2>
         <p className="about-text">
-          Prime Us Inc Carrier has been providing reliable freight transportation services for over X years. Our mission is to deliver excellence, safety, and efficiency in every shipment. Our team is dedicated to ensuring your logistics needs are met with professionalism and care.
+         At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
+
+With a strong focus on safety, punctuality, and customer satisfaction, our experienced team and modern fleet ensure your cargo is handled with the utmost care from pickup to delivery. Whether you require general freight transportation or customized logistics support, we tailor our services to optimize your supply chain and reduce operational complexities.
+
+We believe that transportation is more than just moving goods — it’s about building lasting partnerships based on trust, transparency, and professionalism. Our commitment to compliance and industry best practices means you can count on us for dependable service every step of the way.
+
+Choose Prime Us, Inc. for your logistics needs — where your freight is our priority.
         </p>
         <button className="btn btn-secondary" onClick={onBack}>Back to Home</button>
       </section>
