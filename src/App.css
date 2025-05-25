@@ -310,7 +310,7 @@ body {
 
 /* Facts cards grid */
 .facts-section{
-  width: 100%;
+  width:80%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -318,8 +318,27 @@ body {
   padding: 0; 
 }
 
+.swiper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .section-heading{ 
   text-align: center
+}
+.img_slide_testimone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* optional */
+}
+
+.img_slide_testimone img {
+  max-width: 250px;
+  height: auto;
+  display: block;
 }
 
 .section-description{

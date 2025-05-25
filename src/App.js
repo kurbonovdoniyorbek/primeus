@@ -1,10 +1,18 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Truck, Phone, Mail } from "lucide-react";
 import './App.css';
 import CountUp from 'react-countup';
 import logo from './source/logo.png'; 
 import aboutus from './source/aboutus.jpg'; 
 import { useInView } from 'react-intersection-observer';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -60,35 +68,51 @@ export default function App() {
 // =================== Your Full Main Page with all buttons, sections, etc. ===================
 
 function MainPage({ onAboutClick }) {
-  const testimonials = [
-    {
-      text: "Prime Us Inc Carrier has been an invaluable partner for our logistics. Their reliability and communication are top-notch.",
-      author: "- John Doe, Logistics Manager at ABC Corp"
-    },
-    {
-      text: "Excellent service and timely delivery. Highly recommend Prime Us Inc Carrier for all logistics needs.",
-      author: "- Jane Smith, COO at XYZ Ltd"
-    },
-    {
-      text: "Their team is professional and attentive. Our shipments are always handled with care.",
-      author: "- Mike Johnson, Supply Chain Director"
-    },
-    {
-      text: "Fast and reliable shipping, every time.",
-      author: "- Alice Williams, Operations Head"
-    },
-    {
-      text: "Great customer support and flexible scheduling.",
-      author: "- Bob Brown, Logistics Coordinator"
-    }
-  ];
+  // const testimonials = [
+  //   {
+  //     text: "Prime Us Inc Carrier has been an invaluable partner for our logistics. Their reliability and communication are top-notch.",
+  //     author: "- John Doe, Logistics Manager at ABC Corp"
+  //   },
+  //   {
+  //     text: "Excellent service and timely delivery. Highly recommend Prime Us Inc Carrier for all logistics needs.",
+  //     author: "- Jane Smith, COO at XYZ Ltd"
+  //   },
+  //   {
+  //     text: "Their team is professional and attentive. Our shipments are always handled with care.",
+  //     author: "- Mike Johnson, Supply Chain Director"
+  //   },
+  //   {
+  //     text: "Fast and reliable shipping, every time.",
+  //     author: "- Alice Williams, Operations Head"
+  //   },
+  //   {
+  //     text: "Great customer support and flexible scheduling.",
+  //     author: "- Bob Brown, Logistics Coordinator"
+  //   }
+  // ];
 
-  const slidesPerView = 3; // show 3 at a time
-  const [currentIndex, setCurrentIndex] = useState(slidesPerView); // start from first real slide
-  const slideRef = useRef(null);
-  const transitionRef = useRef(null);
-  const autoSlideRef = useRef(null);
+
+  const brokers = [
+    {
+      img:"https://www.its4logistics.com/apple-icon.png?7aa8a3c50b6a41ef"
+    },
+       {
+      img:"https://media.licdn.com/dms/image/v2/D4E0BAQGjnz3W8MylZQ/company-logo_200_200/company-logo_200_200/0/1689271581018/sagefreight_logo?e=2147483647&v=beta&t=rwv40FKl-eJRDNGUpwo58v3w4G1Rf22Pi0kT2VU0iNE"
+    },{
+      img:"https://media.licdn.com/dms/image/v2/D4D0BAQEPH6Gfo3M7xw/company-logo_200_200/B4DZTW1.RkG8AQ-/0/1738771261140/echo_global_logistics_logo?e=2147483647&v=beta&t=MJSwyTESF9-lSvWPvzGYGWmimt3EkaHlMTS49gI7adc"
+    }, {
+      img:"https://www.its4logistics.com/apple-icon.png?7aa8a3c50b6a41ef"
+    },
+       {
+      img:"https://media.licdn.com/dms/image/v2/D4E0BAQGjnz3W8MylZQ/company-logo_200_200/company-logo_200_200/0/1689271581018/sagefreight_logo?e=2147483647&v=beta&t=rwv40FKl-eJRDNGUpwo58v3w4G1Rf22Pi0kT2VU0iNE"
+    },{
+      img:"https://media.licdn.com/dms/image/v2/D4D0BAQEPH6Gfo3M7xw/company-logo_200_200/B4DZTW1.RkG8AQ-/0/1738771261140/echo_global_logistics_logo?e=2147483647&v=beta&t=MJSwyTESF9-lSvWPvzGYGWmimt3EkaHlMTS49gI7adc"
+    }
+  ]
+
+
   const [page, setPage] = useState('home');
+  
 
    const { ref, inView } = useInView({
     triggerOnce: true, // start counting only once
@@ -98,96 +122,6 @@ function MainPage({ onAboutClick }) {
     setPage(pageName);
   };
 
-  // Clone first and last few slides for infinite looping
-  const extendedTestimonials = [
-    ...testimonials.slice(-slidesPerView), // last 3
-    ...testimonials,
-    ...testimonials.slice(0, slidesPerView) // first 3
-  ];
-
-  const totalSlides = extendedTestimonials.length;
-
-  // Auto slide every 3 seconds
-  useEffect(() => {
-    startAutoSlide();
-    return () => clearInterval(autoSlideRef.current);
-  }, []);
-
-  const startAutoSlide = () => {
-    autoSlideRef.current = setInterval(() => {
-      handleNext();
-    }, 3000);
-  };
-
-  const handleNext = () => {
-   if(currentIndex === totalSlides.length){ 
-    setCurrentIndex(0)
-   }else{
-     setCurrentIndex(prev => prev + 1);
-   }
-  };
-
-  const handlePrev = () => {
-     if(currentIndex === 0){ 
-    setCurrentIndex(totalSlides.length)
-   }else{
-     setCurrentIndex(prev => prev - 1);
-   }
-  };
-
-  // Handle transition end to loop seamlessly
-  const handleTransitionEnd = () => {
-    if (currentIndex >= testimonials.length + slidesPerView) {
-      // jump to start (without transition)
-      setTransition(false);
-      setCurrentIndex(slidesPerView);
-    } else if (currentIndex <= slidesPerView - 1) {
-      // jump to end
-      setTransition(false);
-      setCurrentIndex(testimonials.length);
-    }
-  };
-
-  // To control transition effect
-  const [transition, setTransition] = useState(true);
-
-  // When currentIndex changes, enable transition
-  useEffect(() => {
-    if (slideRef.current) {
-      if (transition) {
-        slideRef.current.style.transition = 'transform 0.5s ease-in-out';
-      } else {
-        slideRef.current.style.transition = 'none';
-      }
-    }
-  }, [transition, currentIndex]);
-
-  // When currentIndex updates, enable transition
-  useEffect(() => {
-    if (slideRef.current) {
-      slideRef.current.style.transform = `translateX(-${currentIndex * (100 / slidesPerView)}%)`;
-    }
-  }, [currentIndex]);
-
-  // Touch support
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
-  const handleTouchStart = (e) => {
-    clearInterval(autoSlideRef.current); // optional: pause auto slide on manual
-    touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    touchEndX.current = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-    const deltaX = touchEndX.current - touchStartX.current;
-    if (deltaX > 50) {
-      handlePrev();
-    } else if (deltaX < -50) {
-      handleNext();
-    }
-    startAutoSlide(); // resume auto slide
-  };
 
   // State for your quote form
   const [formData, setFormData] = useState({
@@ -202,8 +136,7 @@ function MainPage({ onAboutClick }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  // Your full page content (buttons, sections, etc.)
-  // You can also add your own styling/classes as needed
+
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -318,63 +251,39 @@ function MainPage({ onAboutClick }) {
     </div>
 
       {/* Testimonials */}
-      <section style={{ padding: '7rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
+      <section style={{ padding: '2rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
       <h2 className="section-title" style={{ color: 'white', marginBottom: '2rem' }}>What Our Clients Say</h2>
-      <div
-        style={{
-          overflow: 'hidden',
-          maxWidth: '900px',
-          margin: '0 auto',
-          position: 'relative'
-        }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleTouchStart}
-        onMouseUp={handleTouchEnd}
-      >
-        <div
-          ref={slideRef}
-          style={{
-            display: 'flex',
-            width: `${(extendedTestimonials.length * 100) / slidesPerView}%`,
-            transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
-            transition: 'transform 0.5s ease-in-out'
-          }}
-          onTransitionEnd={handleTransitionEnd}
-        >
-          {extendedTestimonials.map((item, index) => (
-            <div
-              key={index}
-              style={{
-                flex: `0 0 ${100 / slidesPerView}%`,
-                boxSizing: 'border-box',
-                padding: '1rem'
-              }}
-            >
-              <div
-                style={{
-                  padding: '2rem',
-                  fontStyle: 'italic',
-                  fontSize: '1.3rem',
-                  color: '#fff',
-                  borderLeft: '4px solid #00CED1',
-                  backgroundColor: 'rgba(0, 206, 209, 0.06)',
-                  borderRadius: '0.6rem',
-                  height: '100%'
-                }}
-              >
-                <p>"{item.text}"</p>
-                <p style={{ marginTop: '2rem', fontWeight: '600', color: 'white' }}>{item.author}</p>
+      <Swiper
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
+  slidesPerView={1}
+  loop={true}
+  centeredSlides={true}
+  autoplay={{
+    delay: 3000,
+    disableOnInteraction: false,
+  }}
+  breakpoints={{
+    0: {
+      slidesPerView: 1,
+    },
+    600: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 3,
+    },
+  }}
+  speed={600}
+           >
+          {brokers.map((item, index) => (
+            <SwiperSlide
+              key={index}>
+              <div className="img_slide_testimone">
+                <img src={item.img} alt="" />
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
-      </div>
-      {/* Optional controls */}
-      <div style={{ marginTop: '1rem' }}>
-  <button onClick={handlePrev} className="nav-button">Prev</button>
-  <button onClick={handleNext} className="nav-button">Next</button>
-</div>
+      </Swiper>
     </section>
       {/* Your full main page content: */}
       <section id="contact" className="quote-form-section">
