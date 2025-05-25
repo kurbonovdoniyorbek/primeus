@@ -252,7 +252,7 @@ function MainPage({ onAboutClick }) {
 
       {/* Testimonials */}
       <section style={{ padding: '2rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
-      <h2 className="section-title" style={{ color: 'white', marginBottom: '2rem' }}>What Our Clients Say</h2>
+      <h2 className="section-title" style={{ color: 'white', marginBottom: '2rem' }}>Proud to Work With These Brokers</h2>
       <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y]}
   slidesPerView={1}
