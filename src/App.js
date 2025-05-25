@@ -1,160 +1,236 @@
-import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Import Router, Route, Routes, Link
-import { Truck, Phone, Mail } from "lucide-react"; // Added Info and Globe icons
+import React, { useState, useEffect,useRef } from "react";
+import { Truck, Phone, Mail } from "lucide-react";
 import './App.css';
+// import logo from './logo.png'; // optional
 
-// Import new placeholder page components
-import AboutPage from './components/About';
-import TrackingPage from './components/Tracking';
-import ServicesPage from './components/ServicesPage'; // Component for the Services section
-import ContactPage from './components/ContactPage'; // Component for the Contact section
-import QuotePage from './components/QuotePage'; // Component for the Quote section
+export default function App() {
+  const [page, setPage] = useState('home');
 
-
-// Placeholder component for the main landing page content
-const LandingPageContent = () => {
-  // Refs for elements to animate
-  const sectionTitleRefs = useRef([]);
-  const sectionSubtitleRefs = useRef([]);
-  const cardRefs = useRef([]);
-  const testimonialRef = useRef(null);
-  const quoteFormRef = useRef(null);
-  const contactInfoRef = useRef(null);
-
-  // Intersection Observer to trigger animations on scroll
+  // Initialize emailjs once
   useEffect(() => {
-    const observerOptions = {
-      root: null, // viewport
-      rootMargin: '0px',
-      threshold: 0.1 // Trigger when 10% of the element is visible
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          // Optional: stop observing once animated
-          // observer.unobserve(entry.target);
-        } else {
-          // Optional: remove animate class when not visible
-          // entry.target.classList.remove('animate');
-        }
-      });
-    }, observerOptions);
-
-    // Observe elements
-    sectionTitleRefs.current.forEach(el => {
-      if (el) observer.observe(el);
-    });
-    sectionSubtitleRefs.current.forEach(el => {
-      if (el) observer.observe(el);
-    });
-    cardRefs.current.forEach(el => {
-      if (el) observer.observe(el);
-    });
-    if (testimonialRef.current) observer.observe(testimonialRef.current);
-    if (quoteFormRef.current) observer.observe(quoteFormRef.current);
-    if (contactInfoRef.current) observer.observe(contactInfoRef.current);
-
-
-    // Cleanup function
-    return () => {
-      sectionTitleRefs.current.forEach(el => {
-        if (el) observer.unobserve(el);
-      });
-      sectionSubtitleRefs.current.forEach(el => {
-        if (el) observer.unobserve(el);
-      });
-      cardRefs.current.forEach(el => {
-        if (el) observer.unobserve(el);
-      });
-      if (testimonialRef.current) observer.unobserve(testimonialRef.current);
-      if (quoteFormRef.current) observer.unobserve(quoteFormRef.current);
-      if (contactInfoRef.current) observer.unobserve(contactInfoRef.current);
-    };
+    if (window.emailjs) {
+      window.emailjs.init('ybZ4fNyGeTceqlDHA');
+    }
   }, []);
 
-  // State to manage form input values (from your original code)
+  const handleNavigate = (pageName) => {
+    setPage(pageName);
+  };
+
+
+ 
+  return (
+    <div className="landing-page">
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="navbar-container">
+          <div className="navbar-logo">
+            {/* <img src={logo} alt="Prime Us Inc Carrier Logo" /> */}
+            <span>Prime Us Inc Carrier</span>
+          </div>
+          <ul className="navbar-links">
+            {page !== 'home' && (
+              <li><button onClick={() => handleNavigate('home')} className="nav-button">
+                 <li><a>Home</a></li>
+                 </button></li>
+            )}
+            {page !== 'about' && (
+              <li><button onClick={() => handleNavigate('about')} className="nav-button">
+            <li><a href="#contact">About us</a></li>
+                </button></li>
+            )}
+            <li><a href="#services">Services</a></li>
+            <li><a href="#quote">Contact Us</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      {/* Render pages based on state */}
+      {page === 'home' ? (
+        <MainPage onAboutClick={() => handleNavigate('about')} />
+      ) : (
+        <AboutUsPage onBack={() => handleNavigate('home')} />
+      )}
+    </div>
+  );
+}
+
+// =================== Your Full Main Page with all buttons, sections, etc. ===================
+
+function MainPage({ onAboutClick }) {
+  const testimonials = [
+    {
+      text: "Prime Us Inc Carrier has been an invaluable partner for our logistics. Their reliability and communication are top-notch.",
+      author: "- John Doe, Logistics Manager at ABC Corp"
+    },
+    {
+      text: "Excellent service and timely delivery. Highly recommend Prime Us Inc Carrier for all logistics needs.",
+      author: "- Jane Smith, COO at XYZ Ltd"
+    },
+    {
+      text: "Their team is professional and attentive. Our shipments are always handled with care.",
+      author: "- Mike Johnson, Supply Chain Director"
+    },
+    {
+      text: "Fast and reliable shipping, every time.",
+      author: "- Alice Williams, Operations Head"
+    },
+    {
+      text: "Great customer support and flexible scheduling.",
+      author: "- Bob Brown, Logistics Coordinator"
+    }
+  ];
+
+  const slidesPerView = 3; // show 3 at a time
+  const [currentIndex, setCurrentIndex] = useState(slidesPerView); // start from first real slide
+  const slideRef = useRef(null);
+  const transitionRef = useRef(null);
+  const autoSlideRef = useRef(null);
+
+  // Clone first and last few slides for infinite looping
+  const extendedTestimonials = [
+    ...testimonials.slice(-slidesPerView), // last 3
+    ...testimonials,
+    ...testimonials.slice(0, slidesPerView) // first 3
+  ];
+
+  const totalSlides = extendedTestimonials.length;
+
+  // Auto slide every 3 seconds
+  useEffect(() => {
+    startAutoSlide();
+    return () => clearInterval(autoSlideRef.current);
+  }, []);
+
+  const startAutoSlide = () => {
+    autoSlideRef.current = setInterval(() => {
+      handleNext();
+    }, 3000);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex(prev => prev + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex(prev => prev - 1);
+  };
+
+  // Handle transition end to loop seamlessly
+  const handleTransitionEnd = () => {
+    if (currentIndex >= testimonials.length + slidesPerView) {
+      // jump to start (without transition)
+      setTransition(false);
+      setCurrentIndex(slidesPerView);
+    } else if (currentIndex <= slidesPerView - 1) {
+      // jump to end
+      setTransition(false);
+      setCurrentIndex(testimonials.length);
+    }
+  };
+
+  // To control transition effect
+  const [transition, setTransition] = useState(true);
+
+  // When currentIndex changes, enable transition
+  useEffect(() => {
+    if (slideRef.current) {
+      if (transition) {
+        slideRef.current.style.transition = 'transform 0.5s ease-in-out';
+      } else {
+        slideRef.current.style.transition = 'none';
+      }
+    }
+  }, [transition, currentIndex]);
+
+  // When currentIndex updates, enable transition
+  useEffect(() => {
+    if (slideRef.current) {
+      slideRef.current.style.transform = `translateX(-${currentIndex * (100 / slidesPerView)}%)`;
+    }
+  }, [currentIndex]);
+
+  // Touch support
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    clearInterval(autoSlideRef.current); // optional: pause auto slide on manual
+    touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    touchEndX.current = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const deltaX = touchEndX.current - touchStartX.current;
+    if (deltaX > 50) {
+      handlePrev();
+    } else if (deltaX < -50) {
+      handleNext();
+    }
+    startAutoSlide(); // resume auto slide
+  };
+
+  // State for your quote form
   const [formData, setFormData] = useState({
-    name: '',
+    companyName: '',
+    contactName: '',
     email: '',
-    company: '',
-    shipmentDetails: '',
-    additionalMessage: ''
+    phoneNumber: '',
+    reason: '',
+    message: ''
   });
-
-  // Replace with the actual URL of your backend endpoint (from your original code)
-  const BACKEND_ENDPOINT = '/api/submit-quote'; // <<< REPLACE THIS WITH YOUR BACKEND URL
-
-  // State to manage loading and error states (from your original code)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  // Handle input changes (from your original code)
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-    // Clear previous states on input change
+  // Your full page content (buttons, sections, etc.)
+  // You can also add your own styling/classes as needed
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
     setError(null);
     setSuccess(false);
   };
 
-  // Handle form submission (from your original code)
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-
-    setLoading(true); // Set loading state
-    setError(null); // Clear previous errors
-    setSuccess(false); // Clear previous success
+  // Handle form submission (emailjs)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
 
     try {
-      const response = await fetch(BACKEND_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any other necessary headers (e.g., authentication tokens)
-        },
-        body: JSON.stringify(formData), // Send the form data as JSON
+      await window.emailjs.send('service_htomd9q', 'template_6wlb2wm', {
+        companyName: formData.companyName,
+        contactName: formData.contactName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        reason: formData.reason,
+        message: formData.message
       });
-
-      if (!response.ok) {
-        let errorMessage = `HTTP error! status: ${response.status}`;
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorData.error || errorMessage;
-        } catch (e) {
-          // If backend doesn't send JSON error, use default
-        }
-        throw new Error(errorMessage);
-      }
-
-      const result = await response.json();
-      console.log('Success:', result);
-      setSuccess(true);
-
+      alert('Your request has been sent successfully!');
       setFormData({
-        name: '',
+        companyName: '',
+        contactName: '',
         email: '',
-        company: '',
-        shipmentDetails: '',
-        additionalMessage: ''
+        phoneNumber: '',
+        reason: '',
+        message: ''
       });
-
-    } catch (error) {
-      console.error('Submission error:', error);
-      setError(`An error occurred: ${error.message}`);
+      setSuccess(true);
+    } catch (err) {
+      console.error('Failed to send email:', err);
+      alert('Failed to send email. Please try again later.');
+      setError('Failed to send email');
     } finally {
       setLoading(false);
-    }
-  };
-
-
+    }}
   return (
     <main className="page">
+
+      {/* Hero / Welcome */}
       <section id="hero" className="hero">
         <div className="hero-content">
           <h1 className="hero-title">Driving Your Business Forward</h1>
@@ -162,157 +238,189 @@ const LandingPageContent = () => {
             Prime Us Inc Carrier provides unparalleled freight transportation services across the nation. Experience reliability, efficiency, and dedicated support for all your logistics needs.
           </p>
           <div className="hero-buttons">
-            <Link to="/quote" className="btn btn-primary">Get a Free Quote</Link> {/* Use Link */}
-            <Link to="/contact" className="btn btn-secondary">Contact Us</Link> {/* Use Link */}
+            <a href="#quote" className="btn btn-primary">Contact us</a>
+            <a href="#contact" className="btn btn-secondary">About Us</a>
           </div>
         </div>
       </section>
 
-      {/* Services Section - Can be a separate page or part of landing */}
+      {/* Services */}
       <section id="services" className="services">
-        <h2 className="section-title" ref={el => sectionTitleRefs.current[0] = el}>Our Services</h2>
-        <p className="section-subtitle" ref={el => sectionSubtitleRefs.current[0] = el}>Comprehensive logistics solutions tailored to your needs.</p>
+        <h2 className="section-title">Our Services</h2>
+        <p className="section-subtitle">Comprehensive logistics solutions tailored to your needs.</p>
         <div className="cards">
-          <div className="card" ref={el => cardRefs.current[0] = el}>
-            <div className="card-icon"><Truck size={48} /></div>
+          <div className="card">
+            <div className="card-icon"><Truck size={48} color="#00FFFF" /></div>
             <h3 className="card-title">Full Truckload (FTL)</h3>
             <p className="card-text">Efficient and dedicated transport for your large shipments across all 50 states.</p>
           </div>
-          <div className="card" ref={el => cardRefs.current[1] = el}>
-            <div className="card-icon"><Truck size={48} /></div>
+          <div className="card">
+            <div className="card-icon"><Phone size={48} color="#00FFFF" /></div>
             <h3 className="card-title">Less Than Truckload (LTL)</h3>
             <p className="card-text">Cost-effective solutions for smaller shipments, consolidated for efficiency.</p>
           </div>
-          <div className="card" ref={el => cardRefs.current[2] = el}>
-            <div className="card-icon"><Truck size={48} /></div>
+          <div className="card">
+            <div className="card-icon"><Mail size={48} color="#00FFFF" /></div>
             <h3 className="card-title">Expedited Freight</h3>
             <p className="card-text">Urgent delivery services to meet your critical timelines with speed and precision.</p>
           </div>
         </div>
       </section>
 
-      {/* Testimonial Section */}
-      <section className="testimonials">
-        <h2 className="section-title" ref={el => sectionTitleRefs.current[1] = el}>What Our Clients Say</h2>
-        <div className="testimonial-card" ref={testimonialRef}>
-          <p>"Prime Us Inc Carrier has been an invaluable partner for our logistics. Their reliability and communication are top-notch."</p>
-          <p className="testimonial-author">- John Doe, Logistics Manager at ABC Corp</p>
+      {/* Testimonials */}
+      <section style={{ padding: '7rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
+      <h2 className="section-title" style={{ color: 'white', marginBottom: '2rem' }}>What Our Clients Say</h2>
+      <div
+        style={{
+          overflow: 'hidden',
+          maxWidth: '900px',
+          margin: '0 auto',
+          position: 'relative'
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleTouchStart}
+        onMouseUp={handleTouchEnd}
+      >
+        <div
+          ref={slideRef}
+          style={{
+            display: 'flex',
+            width: `${(extendedTestimonials.length * 100) / slidesPerView}%`,
+            transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
+            transition: 'transform 0.5s ease-in-out'
+          }}
+          onTransitionEnd={handleTransitionEnd}
+        >
+          {extendedTestimonials.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                flex: `0 0 ${100 / slidesPerView}%`,
+                boxSizing: 'border-box',
+                padding: '1rem'
+              }}
+            >
+              <div
+                style={{
+                  padding: '2rem',
+                  fontStyle: 'italic',
+                  fontSize: '1.3rem',
+                  color: '#fff',
+                  borderLeft: '4px solid #00CED1',
+                  backgroundColor: 'rgba(0, 206, 209, 0.06)',
+                  borderRadius: '0.6rem',
+                  height: '100%'
+                }}
+              >
+                <p>"{item.text}"</p>
+                <p style={{ marginTop: '2rem', fontWeight: '600', color: 'white' }}>{item.author}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
-
-      {/* Quote Form Section - Can be a separate page or part of landing */}
+      </div>
+      {/* Optional controls */}
+      <div style={{ marginTop: '1rem' }}>
+        <button onClick={handlePrev} style={{ margin: '0 10px', padding: '0.5rem 1rem' }}>Prev</button>
+        <button onClick={handleNext} style={{ margin: '0 10px', padding: '0.5rem 1rem' }}>Next</button>
+      </div>
+    </section>
+      {/* Your full main page content: */}
       <section id="quote" className="quote-form-section">
-        <div className="quote-form-container" ref={quoteFormRef}>
-          <h2 className="quote-title" ref={el => sectionTitleRefs.current[2] = el}>Request a Quote</h2>
-          <p className="quote-text" ref={el => sectionSubtitleRefs.current[1] = el}>Fill out our form and we’ll get back to you shortly with a tailored logistics proposal.</p>
+        <div className="quote-form-container">
+          <h2 className="quote-title">Contact US</h2>
+          <p className="quote-text">Fill out our form and we’ll get back to you shortly with a tailored logistics proposal.</p>
+          
+          {/* Your form */}
           <form className="form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Your Name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              disabled={loading}
-            />
-            <input
-              type="email"
-              placeholder="Email Address"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              disabled={loading}
-            />
-            <input
-              type="text"
-              placeholder="Company Name"
-              name="company"
-              value={formData.company}
-              onChange={handleInputChange}
-              disabled={loading}
-            />
-            <input
-              type="text"
-              placeholder="Shipment Details (Origin, Destination, Type)"
-              name="shipmentDetails"
-              value={formData.shipmentDetails}
-              onChange={handleInputChange}
-              required
-              disabled={loading}
-            />
-            <textarea
-              placeholder="Additional Message / Details"
-              rows="4"
-              name="additionalMessage"
-              value={formData.additionalMessage}
-              onChange={handleInputChange}
-              disabled={loading}
-            />
-            <button type="submit" disabled={loading}>
-              {loading ? 'Sending...' : 'Send Request'}
-            </button>
-
-            {success && <p style={{ color: 'green' }}>Quote request sent successfully! We will contact you shortly.</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-
-          </form>
+  <input
+    type="text"
+    placeholder="Company Name"
+    name="companyName"
+    value={formData.companyName}
+    onChange={handleInputChange}
+    required
+    disabled={loading}
+  />
+  <input
+    type="text"
+    placeholder="Contact Name"
+    name="contactName"
+    value={formData.contactName}
+    onChange={handleInputChange}
+    required
+    disabled={loading}
+  />
+  <input
+    type="email"
+    placeholder="Email"
+    name="email"
+    value={formData.email}
+    onChange={handleInputChange}
+    required
+    disabled={loading}
+  />
+  <input
+    type="tel"
+    placeholder="Phone Number"
+    name="phoneNumber"
+    value={formData.phoneNumber}
+    onChange={handleInputChange}
+    required
+    disabled={loading}
+  />
+  <input
+    type="text"
+    placeholder="Reason for Contact"
+    name="reason"
+    value={formData.reason}
+    onChange={handleInputChange}
+    required
+    disabled={loading}
+  />
+  <textarea
+    placeholder="Message"
+    rows="4"
+    name="message"
+    value={formData.message}
+    onChange={handleInputChange}
+    disabled={loading}
+  />
+  <button type="submit" disabled={loading}>
+    {loading ? 'Sending...' : 'Send Request'}
+  </button>
+  {success && <p style={{ color: 'green' }}>Request sent successfully! We will contact you shortly.</p>}
+  {error && <p style={{ color: 'red' }}>{error}</p>}
+</form>
         </div>
       </section>
 
-      {/* Contact Section - Can be a separate page or part of landing */}
+      {/* Contact Info */}
       <section id="contact" className="contact-section">
-        <h2 className="section-title" ref={el => sectionTitleRefs.current[3] = el}>Contact Us</h2>
-        <div className="contact-info" ref={contactInfoRef}>
-          <p><Phone size={20} /> (123) 456-7890</p>
-          <p><Mail size={20} /> safetyprimeus@gmail.com</p>
-          <p><Truck size={20} /> Plainfield IL</p>
+        <h2 className="section-title">Contact Us</h2>
+        <div className="contact-info">
+          <p><Phone size={20} color="#00FFFF" />  +1 (630) 230 6928</p>
+          <p><Mail size={20} color="#00FFFF" /> primeus7inc@gmail.com</p>
+          <p><Truck size={20} color="#00FFFF" />13310 Mary lee CT Plainfiled IL 60585</p>
         </div>
       </section>
+
     </main>
   );
-};
+}
 
-// Main App component with Routing
-export default function App() {
+// =================== Your About Us Page ===================
+function AboutUsPage({ onBack }) {
   return (
-    <Router>
-      <div className="landing-page">
-        <nav className="navbar">
-          <div className="navbar-container">
-            <div className="navbar-logo">
-              {/* <img src={logo} alt="Prime Us Inc Carrier Logo" /> */}
-              <Link to="/">Prime Us Inc Carrier</Link> {/* Link logo to Home */}
-            </div>
-            <ul className="navbar-links">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/services">Services</Link></li> {/* Link to Services Page */}
-              <li><Link to="/tracking">Tracking</Link></li>   {/* Link to Tracking Page */}
-              <li><Link to="/about">About Us</Link></li>     {/* Link to About Page */}
-              <li><Link to="/contact">Contact</Link></li>   {/* Link to Contact Page */}
-              <li><Link to="/quote">Get a Quote</Link></li>   {/* Link to Quote Page */}
-            </ul>
-          </div>
-        </nav>
-
-        {/* Define Routes */}
-        <Routes>
-          <Route path="/" element={<LandingPageContent />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/tracking" element={<TrackingPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/quote" element={<QuotePage />} />
-          {/* Add a catch-all for 404 if needed */}
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
-        </Routes>
-
-        <footer className="footer">
-          <div className="footer-container">
-            <p>© 2023 Prime Us Inc Carrier. All rights reserved.</p>
-          </div>
-        </footer>
-      </div>
-    </Router>
+    <main className="page">
+      <section className="about-section">
+        <h2 className="section-title">About Us</h2>
+        <p className="about-text">
+          Prime Us Inc Carrier has been providing reliable freight transportation services for over X years. Our mission is to deliver excellence, safety, and efficiency in every shipment. Our team is dedicated to ensuring your logistics needs are met with professionalism and care.
+        </p>
+        <button className="btn btn-secondary" onClick={onBack}>Back to Home</button>
+      </section>
+    </main>
   );
 }
