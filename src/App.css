@@ -315,7 +315,15 @@ body {
   align-items: center;
   flex-direction: column;
   gap: 0px;
-  padding: 0;
+  padding: 0; 
+}
+
+.section-heading{ 
+  text-align: center
+}
+
+.section-description{
+  text-align: center
 }
 
 .facts-cards {
@@ -417,6 +425,7 @@ body {
     width: 90%;
     display: flex;
     flex-direction: column;
+    align-items: center
   }
   
 .facts-cards {
