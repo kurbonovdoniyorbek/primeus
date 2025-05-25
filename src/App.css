@@ -310,6 +310,10 @@ body {
 
 /* Facts cards grid */
 .facts-section{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   gap: 0px;
   padding: 0;
 }
