@@ -88,10 +88,15 @@ function MainPage({ onAboutClick }) {
   const slideRef = useRef(null);
   const transitionRef = useRef(null);
   const autoSlideRef = useRef(null);
+  const [page, setPage] = useState('home');
+
    const { ref, inView } = useInView({
     triggerOnce: true, // start counting only once
     threshold: 0.5,     // 50% of the element is visible
   });
+   const handleNavigate = (pageName) => {
+    setPage(pageName);
+  };
 
   // Clone first and last few slides for infinite looping
   const extendedTestimonials = [
@@ -253,7 +258,9 @@ function MainPage({ onAboutClick }) {
           </p>
           <div className="hero-buttons">
             <a href="#contact" className="btn btn-primary">Contact us</a>
-            <a href="#about" className="btn btn-secondary">About Us</a>
+     <a href="#about"  onClick={() => handleNavigate('about')} className="btn btn-secondary">About Us</a>
+
+            
           </div>
         </div>
       </section>
@@ -364,7 +371,7 @@ function MainPage({ onAboutClick }) {
         </div>
       </div>
       {/* Optional controls */}
-      <div style={{ marginTop: '1rem'}}>
+      <div style={{ marginTop: '1rem' }}>
   <button onClick={handlePrev} className="nav-button">Prev</button>
   <button onClick={handleNext} className="nav-button">Next</button>
 </div>
