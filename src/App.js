@@ -17,13 +17,6 @@ import 'swiper/css/scrollbar';
 export default function App() {
   const [page, setPage] = useState('home');
 
-  // Initialize emailjs once
-  useEffect(() => {
-    if (window.emailjs) {
-      window.emailjs.init('ybZ4fNyGeTceqlDHA');
-    }
-  }, []);
-
   const handleNavigate = (pageName) => {
     setPage(pageName);
   };
@@ -132,6 +125,7 @@ function MainPage({ onAboutClick }) {
     reason: '',
     message: ''
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -139,11 +133,12 @@ function MainPage({ onAboutClick }) {
 
 
   // Handle form input change
-  const handleInputChange = (e) => {
+   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setError(null);
-    setSuccess(false);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   // Handle form submission (emailjs)
@@ -154,31 +149,38 @@ function MainPage({ onAboutClick }) {
     setSuccess(false);
 
     try {
-      await window.emailjs.send('service_htomd9q', 'template_6wlb2wm', {
-        companyName: formData.companyName,
-        contactName: formData.contactName,
-        email: formData.email,
-        phoneNumber: formData.phoneNumber,
-        reason: formData.reason,
-        message: formData.message
+      const response = await fetch('https://formspree.io/f/movdozdv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      alert('Your request has been sent successfully!');
-      setFormData({
-        companyName: '',
-        contactName: '',
-        email: '',
-        phoneNumber: '',
-        reason: '',
-        message: ''
-      });
-      setSuccess(true);
+
+      if (response.ok) {
+        setSuccess(true);
+        alert('Request sent successfully!');
+        setFormData({
+          companyName: '',
+          contactName: '',
+          email: '',
+          phoneNumber: '',
+          reason: '',
+          message: '',
+        });
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Form submission failed');
+      }
     } catch (err) {
-      console.error('Failed to send email:', err);
-      alert('Failed to send email. Please try again later.');
-      setError('Failed to send email');
+      console.error('Error submitting form:', err);
+      setError('Failed to send message. Please try again later.');
     } finally {
       setLoading(false);
-    }}
+    }
+
+    }
   return (
     <main className="page">
 
