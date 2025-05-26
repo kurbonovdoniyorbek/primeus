@@ -1,6 +1,7 @@
 /* Define a more sophisticated Cyan and White */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
-  --sophisticated-cyan: #00CED1; /* DarkTurquoise - a deeper, richer cyan */
+  --sophisticated-cyan: #fff; /* DarkTurquoise - a deeper, richer cyan */
   --white: #FFFFFF;
   --dark-navy: #1A2E40; /* A deep, professional dark blue/grey */
   --medium-grey: #4A6175; /* A supportive medium grey */
@@ -15,24 +16,15 @@ a{
 .nav-button {
   margin: 0 10px;
   padding: 0.5rem 1rem;
-  border: 5px solid var(--light-grey);
   background-color: var(--sophisticated-cyan);
   color: var(--white);
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.nav-button:hover {
-  background-color: var(--dark-navy);
-}
 
-.nav-button:focus {
-  outline: 2px solid var(--white);
-  outline-offset: 2px;
-}
 
 /* General Body and Page Styling */
 body {
@@ -56,32 +48,31 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(26, 46, 64, 0.95); /* Slightly more opaque dark navy */
-  backdrop-filter: blur(8px); /* Slightly less blur */
+  background-color: transparent; /* Slightly more opaque dark navy */
+  backdrop-filter: blur(10px); /* Slightly less blur */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Deeper, softer shadow */
   z-index: 1000;
+  filter: brightness(100%);
 }
-
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 0px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar-logo {
+  padding: 10px 20px;
   display: flex;
   align-items: center;
-  font-size: 1.6rem; /* Slightly larger logo text */
+  font-size: 2rem; /* Slightly larger logo text */
   font-weight: 700; /* Bolder */
-  color: var(--sophisticated-cyan);
-  text-shadow: 0 0 3px var(--sophisticated-cyan); /* Subtle glow */
 }
 
 .navbar-logo img {
-  height: 35px; /* Slightly larger logo image */
+  height: 45px; /* Slightly larger logo image */
   margin-right: 0.75rem;
   filter: drop-shadow(0 0 3px var(--sophisticated-cyan));
 }
@@ -142,7 +133,7 @@ body {
     background-image: url('./source/background.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(4px) brightness(0.6);
+    filter: blur(4px) brightness(90%);
     z-index: 0;
 }
 
@@ -159,16 +150,15 @@ body {
   font-weight: 800; /* Extra bold */
   margin-bottom: 1.5rem;
   color: var(--white);
-  text-shadow: 0 0 8px var(--sophisticated-cyan), 0 0 15px var(--sophisticated-cyan); /* Softer, less intense glow */
   animation: none; /* Remove pulse animation for a calmer feel */
 }
 
 
 .hero-text {
-  font-size: 1.4rem; /* Larger text */
+  font-size: 1.7rem; /* Larger text */
   max-width: 800px;
   margin: 0 auto 3rem; /* More space below text */
-  color: var(--text-color);
+  color: #fff;
 }
 
 .hero-buttons {
@@ -209,28 +199,30 @@ body {
 
 
 .btn-primary {
-  background-color: var(--sophisticated-cyan);
-  color: var(--dark-navy); /* Dark text on cyan */
+  background-color: #101E2C;
+  border: 1px solid #fff;
+  color: #fff; /* Dark text on cyan */
   border: none;
-  box-shadow: 0 0 8px var(--sophisticated-cyan), 0 0 12px var(--sophisticated-cyan); /* Softer glow shadow */
 }
 
 .btn-primary:hover {
-  background-color: #00B0B0; /* Slightly darker cyan */
-  box-shadow: 0 0 10px var(--sophisticated-cyan), 0 0 18px var(--sophisticated-cyan); /* More prominent glow on hover */
+  background-color: #101E2C; /* Slightly darker cyan */
+  box-shadow: 0 0 10px #101E2C, 0 0 18px #101E2C; /* More prominent glow on hover */
   transform: translateY(-4px); /* Lift effect */
+  color: #fff;
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--sophisticated-cyan);
-  border: 2px solid var(--sophisticated-cyan); /* Cyan border */
-  box-shadow: inset 0 0 4px var(--sophisticated-cyan), 0 0 4px var(--sophisticated-cyan); /* Subtle inner and outer glow */
+  color: #fff;
+  border: 2px solid #fff; /* Cyan border */
+   box-shadow: 0 0 4px #101E2C, 0 0 4px #101E2C; /* More prominent glow on hover */
+ /* Subtle inner and outer glow */
 }
 
 .btn-secondary:hover {
   background-color: rgba(0, 206, 209, 0.1); /* Light cyan background on hover */
-  box-shadow: inset 0 0 6px var(--sophisticated-cyan), 0 0 6px var(--sophisticated-cyan); /* More prominent glow on hover */
+   box-shadow: 0 0 10px #101E2C, 0 0 18px #101E2C; /* More prominent glow on hover */
   transform: translateY(-4px); /* Lift effect */
 }
 
