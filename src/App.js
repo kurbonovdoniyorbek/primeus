@@ -21,6 +21,25 @@ export default function App() {
     setPage(pageName);
   };
 
+  const handleScrollToSection = (id) => {
+  if (page !== 'home') {
+    setPage('home');
+    // keyin scroll qilishni kutish uchun setTimeout
+    setTimeout(() => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // sahifa render bo'lishini kutish uchun
+  } else {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+};
+
+
 
  
   return (
@@ -32,19 +51,32 @@ export default function App() {
           <a href="/"><img src={logo} alt="Prime Us Inc Carrier Logo" /></a>
           </div>
           <ul className="navbar-links">
-            {page !== 'home' && (
-              <li><button onClick={() => handleNavigate('home')} className="nav-button">
-                 <li><a>Home</a></li>
-                 </button></li>
-            )}
-            {page !== 'about' && (
-              <li><button onClick={() => handleNavigate('about')} className="nav-button">
-            <li><a href="#about">ABOUT US</a></li>
-                </button></li>
-            )}
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-          </ul>
+  {page !== 'home' && (
+    <li>
+      <button onClick={() => handleNavigate('home')} className="nav-button">
+        <li><a>MAIN PAGE</a></li>
+      </button>
+    </li>
+  )}
+  {page !== 'about' && (
+    <li>
+      <button onClick={() => handleNavigate('about')} className="nav-button">
+        <li><a>ABOUT US</a></li>
+      </button>
+    </li>
+  )}
+  <li>
+    <button className="nav-button" onClick={() => handleScrollToSection('services')}>
+      <li><a>SERVICES</a></li>
+    </button>
+  </li>
+  <li>
+    <button className="nav-button" onClick={() => handleScrollToSection('contact')}>
+      <li><a>CONTACT US</a></li>
+    </button>
+  </li>
+</ul>
+
         </div>
       </nav>
 
@@ -193,7 +225,7 @@ function MainPage({ onAboutClick }) {
           </p>
           <div className="hero-buttons">
             <a href="#contact" className="btn btn-primary">Contact us</a>
-     <a href="#about"  onClick={() => handleNavigate('about')} className="btn btn-secondary">About Us</a>
+     <a href="/about"  onClick={() => handleNavigate('about')} className="btn btn-secondary">About Us</a>
 
             
           </div>
@@ -233,15 +265,15 @@ function MainPage({ onAboutClick }) {
       <div className="facts-cards">
       
         <div className="fact-card bg-secondary">
-          <div className="fact-number" ref={ref}> {inView && <CountUp end={3334} duration={2} />}</div>
+          <div className="fact-number" ref={ref}> {inView && <CountUp end={10655} duration={2} />}</div>
           <div className="fact-label">Happy Clients</div>
         </div>
         <div className="fact-card bg-info">
-           <div className="fact-number" ref={ref}>{inView && <CountUp end={186} duration={2} />}</div>
+           <div className="fact-number" ref={ref}>{inView && <CountUp end={3243} duration={2} />}</div>
           <div className="fact-label">Monthly Completed Shipments</div>
         </div>
         <div className="fact-card bg-success">
-          <div className="fact-number" ref={ref}>{inView && <CountUp end={389} duration={2} />}</div>
+          <div className="fact-number" ref={ref}>{inView && <CountUp end={5664} duration={2} />}</div>
           <div className="fact-label">Customer Feedback</div>
         </div> 
       <div className="fact-card bg-primary">
@@ -253,8 +285,8 @@ function MainPage({ onAboutClick }) {
     </div>
 
       {/* Testimonials */}
-      <section style={{ padding: '2rem 2rem', backgroundColor: '#101E2C', textAlign: 'center' }}>
-      <h2 className="section-title" style={{ color: 'white', marginBottom: '2rem' }}>Proud to Work With These Brokers</h2>
+      <section style={{ padding: '2rem 2rem', backgroundColor: '#fff', textAlign: 'center' }}>
+      <h2 className="section-title" style={{ color: '#000', marginBottom: '2rem' }}>Proud to Work With These Brokers</h2>
       <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y]}
   slidesPerView={1}
@@ -361,7 +393,7 @@ function MainPage({ onAboutClick }) {
       <section id="contact" className="contact-section">
         <h2 className="section-title">Contact Us</h2>
         <div className="contact-info">
-          <p><Phone size={20} color="#00FFFF" />  +1 (630) 230 6928</p>
+          <p><Phone size={20} color="#00FFFF" /> +1 630 538 4723</p>
           <p><Mail size={20} color="#00FFFF" /> primeus7inc@gmail.com</p>
           <p><Truck size={20} color="#00FFFF" />13310 Mary lee CT Plainfiled IL 60585</p>
         </div>
@@ -375,20 +407,22 @@ function MainPage({ onAboutClick }) {
 function AboutUsPage({ onBack }) {
   return (
     <main className="page">
-      <section className="about-section">
-        <h2 className="section-title">About Us</h2>
-        <img src={aboutus} alt="" />
-        <p className="about-text">
-         At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
+      <section className="about-section-with-bg">
+  <div className="overlay">
+    <h2 className="about_us-title">About Us</h2>
+    <p className="about-text">
+      At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
+      <br /><br />
+      With a strong focus on safety, punctuality, and customer satisfaction, our experienced team and modern fleet ensure your cargo is handled with the utmost care from pickup to delivery. Whether you require general freight transportation or customized logistics support, we tailor our services to optimize your supply chain and reduce operational complexities.
+      <br /><br />
+      We believe that transportation is more than just moving goods — it’s about building lasting partnerships based on trust, transparency, and professionalism. Our commitment to compliance and industry best practices means you can count on us for dependable service every step of the way.
+      <br /><br />
+      Choose Prime Us, Inc. for your logistics needs — where your freight is our priority.
+    </p>
+    <button className="btn btn-secondary" onClick={onBack}>Back to Home</button>
+  </div>
+</section>
 
-With a strong focus on safety, punctuality, and customer satisfaction, our experienced team and modern fleet ensure your cargo is handled with the utmost care from pickup to delivery. Whether you require general freight transportation or customized logistics support, we tailor our services to optimize your supply chain and reduce operational complexities.
-
-We believe that transportation is more than just moving goods — it’s about building lasting partnerships based on trust, transparency, and professionalism. Our commitment to compliance and industry best practices means you can count on us for dependable service every step of the way.
-
-Choose Prime Us, Inc. for your logistics needs — where your freight is our priority.
-        </p>
-        <button className="btn btn-secondary" onClick={onBack}>Back to Home</button>
-      </section>
     </main>
   );
 }

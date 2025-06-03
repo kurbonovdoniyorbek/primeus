@@ -31,7 +31,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: 'Roboto', sans-serif; /* A clean, modern, yet classic font */
-  background-color: var(--dark-navy);
+  background-color: var(--sophisticated-cyan);
   color: var(--text-color);
   line-height: 1.7; /* Slightly increased line height for readability */
   overflow-x: hidden;
@@ -48,7 +48,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: transparent; /* Slightly more opaque dark navy */
+  background-color: var(--sophisticated-cyan); /* Slightly more opaque dark navy */
   backdrop-filter: blur(10px); /* Slightly less blur */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Deeper, softer shadow */
   z-index: 1000;
@@ -87,7 +87,7 @@ body {
 
 .navbar-links li a {
   text-decoration: none;
-  color: var(--white);
+  color: #000;
   font-weight: 500;
   transition: color 0.3s ease, text-shadow 0.3s ease;
   padding: 0.5rem 0; /* Add some padding for click area */
@@ -101,15 +101,10 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--sophisticated-cyan);
+  background-color: #000;
   transition: width 0.3s ease-out;
 }
 
-
-.navbar-links li a:hover {
-  color: var(--sophisticated-cyan);
-  text-shadow: 0 0 5px var(--sophisticated-cyan);
-}
 
 .navbar-links li a:hover::after {
   width: 100%;
@@ -199,15 +194,15 @@ body {
 
 
 .btn-primary {
-  background-color: #101E2C;
+  background-color: #000;
   border: 1px solid #fff;
   color: #fff; /* Dark text on cyan */
   border: none;
 }
 
 .btn-primary:hover {
-  background-color: #101E2C; /* Slightly darker cyan */
-  box-shadow: 0 0 10px #101E2C, 0 0 18px #101E2C; /* More prominent glow on hover */
+  background-color: #000; /* Slightly darker cyan */
+  box-shadow: 0 0 10px #000, 0 0 18px #000; /* More prominent glow on hover */
   transform: translateY(-4px); /* Lift effect */
   color: #fff;
 }
@@ -235,7 +230,11 @@ body {
   margin-bottom: 1.2rem;
   color: var(--white);
   padding: 20px;
-  text-shadow: 0 0 4px var(--sophisticated-cyan); /* Subtle glow */
+}
+
+.about_us-title{
+  color: #fff;
+  font-size: 40px;
 }
 
 .nav-button{
@@ -255,7 +254,7 @@ body {
 /* Services Section (Cards) */
 .services {
   padding: 2rem; /* More padding */
-  background-color: var(--dark-navy);
+  background-color: var(--sophisticated-cyan);
   position: relative;
   z-index: 0;
 }
@@ -280,7 +279,7 @@ body {
 .section-title {
   font-size: 14px;
   letter-spacing: 2px;
-  color: #555;
+  color: #000;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
@@ -290,12 +289,13 @@ body {
   font-weight: bold;
   margin-bottom: 20px;
   line-height: 1.2;
+  color: #000;
 }
 
 /* Description paragraph */
 .section-description {
   font-size: 1rem;
-  color: #555;
+  color: #000;
   margin-bottom: 40px;
   line-height: 1.5;
 }
@@ -365,7 +365,6 @@ body {
 }
 
 .fact-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transform: translateY(-5px);
 }
 
@@ -377,15 +376,42 @@ body {
  gap: 0px 25px; 
 }
 
-.about-section img{
-  width: 90%;
-  filter: brightness(95%);
+.fact-card:last-child{
+  color: #000;
 }
 
-
-.about-section p {
-  padding: 0px 40px;
+.about-section-with-bg {
+  position: relative;
+  background-image: url('./source/aboutus.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
+
+.about-section-with-bg .overlay {
+  background-color: rgba(0, 0, 0, 0.6); /* qora fon ustma-ust ko'rinish uchun */
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  max-width: 900px;
+  text-align: center;
+}
+
+.about-section-with-bg .section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.about-section-with-bg .about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
 /* Background colors for cards */
 .bg-primary {
   width: 97%;
@@ -423,7 +449,7 @@ body {
 
 .fact-number a{ 
     text-decoration: none;
-  color: var(--white);
+  color: #000;
 }
 /* Fact label styles */
 .fact-label {
@@ -458,13 +484,15 @@ body {
 
 .card {
   background: rgba(255, 255, 255, 0.06); /* Slightly more opaque background */
-  border-radius: 0.75rem; /* Slightly less rounded */
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 206, 209, 0.15); /* Deeper, softer shadow with subtle glow */
   padding: 3rem; /* More padding */
   text-align: center;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
   overflow: hidden;
+  border:1px solid black;
+  border-radius: 3px;
+  color: #000;
+  cursor: pointer;
 }
 
 .card::before {
@@ -490,6 +518,7 @@ body {
 }
 
 .card-icon {
+  color: #000;
   margin-bottom: 2.2rem; /* More space below icon */
 }
 
@@ -497,13 +526,11 @@ body {
   font-size: 1.6rem; /* Larger title */
   font-weight: 700;
   margin-bottom: 1.2rem;
-  color: var(--white);
   text-shadow: 0 0 3px var(--sophisticated-cyan); /* Subtle glow */
 }
 
 .card-text {
   font-size: 1.15rem; /* Slightly larger text */
-  color: var(--text-color);
 }
 
 /* Testimonial Section */
@@ -516,7 +543,8 @@ body {
 
 .section-title {
   margin-bottom: 2rem;
-  color: var(--white);
+  font-size: 15px;
+  font-weight: 900px;
 }
 
 .testimonial-container {
@@ -570,7 +598,7 @@ button {
 /* Quote Form Section */
 .quote-form-section {
   padding: 7rem 2rem;
-  background-color: var(--dark-navy);
+  background-color: #fff;
 }
 
 .quote-form-container {
@@ -579,10 +607,10 @@ button {
   border-radius: 1rem;
   max-width: 800px; /* Wider form */
   margin: 0 auto;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 206, 209, 0.15); /* Deeper, softer shadow with subtle glow */
   text-align: left;
   position: relative;
   z-index: 0;
+  border: 1px solid black;
 }
 
 
@@ -591,14 +619,13 @@ button {
   font-weight: 700;
   margin-bottom: 1.8rem;
   text-align: center;
-  color: var(--white);
-  text-shadow: 0 0 4px var(--sophisticated-cyan);
+  color: #000;
 }
 
 .quote-text {
   margin-bottom: 3rem;
   text-align: center;
-  color: var(--medium-grey); /* Use medium grey */
+  color: #000; /* Use medium grey */
   font-size: 1.15rem;
 }
 
@@ -611,10 +638,10 @@ button {
 .form input,
 .form textarea {
   padding: 1.2rem; /* More padding */
-  border: 1px solid rgba(0, 206, 209, 0.4); /* Cyan border */
+  border: 1px solid #000; /* Cyan border */
   border-radius: 0.6rem;
   font-size: 1.15rem; /* Slightly larger text */
-  color: var(--white);
+  color: #000;
   background-color: rgba(255, 255, 255, 0.04); /* Very subtle background */
   width: 100%;
   box-sizing: border-box;
@@ -623,33 +650,33 @@ button {
 
 .form input::placeholder,
 .form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5); /* Lighter placeholder text */
+  color:#000; /* Lighter placeholder text */
 }
 
 
 .form input:focus,
 .form textarea:focus {
   outline: none;
-  border-color: var(--sophisticated-cyan);
-  box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.2), 0 0 10px var(--sophisticated-cyan); /* Cyan glow focus ring */
+  border-color: #fff;
+  box-shadow: 0 0 0 3px #000, 0 0 10px #000; /* Cyan glow focus ring */
   background-color: rgba(255, 255, 255, 0.06); /* Slightly more visible background on focus */
 }
 
 .form button {
   padding: 1.4rem; /* Larger button */
-  background: var(--sophisticated-cyan);
-  color: var(--dark-navy);
+  background: #fff;
+  color: #000;
   font-weight: bold;
   border: none;
   border-radius: 0.6rem;
   cursor: pointer;
   font-size: 1.35rem; /* Larger text */
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 10px var(--sophisticated-cyan); /* Shadow with cyan glow */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 10px #000; /* Shadow with cyan glow */
 }
 
 .form button:hover {
-  background: #00B0B0;
+  background: #fff;
   transform: translateY(-4px); /* Lift effect */
   box-shadow: 0 9px 18px rgba(0, 0, 0, 0.5), 0 0 15px var(--sophisticated-cyan); /* More prominent shadow and glow */
 }
@@ -665,13 +692,14 @@ button {
 /* Contact Section */
 .contact-section {
   padding: 7rem 2rem;
-  background-color: #101E2C; /* Even darker background */
-  color: var(--white);
+  background-color: #000; /* Even darker background */
+  color: #fff;
   text-align: center;
+  border: 1px solid black;
 }
 
 .contact-section .section-title {
-  color: var(--white);
+  color: #fff;
 }
 
 .contact-info {
@@ -688,18 +716,15 @@ button {
   align-items: center;
   justify-content: center;
   gap: 1rem; /* Increased gap */
-  color: var(--text-color);
+  color: #fff;
 }
 
-.contact-info p svg {
-  filter: drop-shadow(0 0 4px var(--sophisticated-cyan)); /* Cyan glow for icons */
-}
 
 
 /* Footer Styling */
 .footer {
   background-color: #0E1721; /* Very dark background */
-  color: #8899A8; /* Lighter grey for footer text */
+  color: #000; /* Lighter grey for footer text */
   padding: 3rem; /* More padding */
   text-align: center;
   font-size: 1.05rem; /* Slightly larger text */
@@ -715,8 +740,23 @@ button {
   .navbar-links {
     display: none; /* Keep mobile menu toggle functionality separate */
   }
+  .navbar-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      margin: 0 0px;
+  padding: 0px 0px;
+  }
+  
 
-
+  .navbar-logo {
+  padding: 15px 0px 0px 0px ;
+  display: flex;
+  font-weight: 800; /* Bolder */
+}
+  .navbar-logo img{
+    height: 50px;
+  }
   .hero-content{
     align-items: center;
     flex-direction: column;
