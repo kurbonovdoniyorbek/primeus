@@ -1,22 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Truck, Phone, Mail } from "lucide-react";
 import './App.css';
 import CountUp from 'react-countup';
 import logo from './source/logo.png'; 
-import aboutus from './source/aboutus.jpg'; 
 import { useInView } from 'react-intersection-observer';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  Link,
+} from 'react-router-dom';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
+import PrivacyPolicy from "./source/components/PrivacyPolicy";
+import TermsAndConditions from "./source/components/TermsAndConditions";
 
 export default function App() {
-  const [page, setPage] = useState('home');
+  return (
+    <Router>
+        <MainLayot/>
+       <Routes>
+         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/aboutus" element={<AboutUsPage />} />
+      </Routes>
+    </Router>
+  );
+}
 
+
+
+function MainLayot() {
+  const [page, setPage] = useState('home');
+  const [navON,setNavOn] = useState(true)
+   const location = useLocation();
+  console.log(navON)
   const handleNavigate = (pageName) => {
     setPage(pageName);
   };
@@ -40,7 +65,6 @@ export default function App() {
 };
 
 
-
  
   return (
     <div className="landing-page">
@@ -51,17 +75,21 @@ export default function App() {
           <a href="/"><img src={logo} alt="Prime Us Inc Carrier Logo" /></a>
           </div>
           <ul className="navbar-links">
-  {page !== 'home' && (
+   {!navON && (
     <li>
-      <button onClick={() => handleNavigate('home')} className="nav-button">
-        <li><a>MAIN PAGE</a></li>
+      <button onClick={() => setNavOn(true)} className="nav-button">
+    <Link to="/" className="nav-button" onClick={() => setNavOn(false)}>
+       MAIN PAGE
+    </Link>
       </button>
     </li>
   )}
-  {page !== 'about' && (
+  {navON && (
     <li>
-      <button onClick={() => handleNavigate('about')} className="nav-button">
-        <li><a>ABOUT US</a></li>
+      <button onClick={() => setNavOn(false)} className="nav-button">
+        <Link to="/aboutus" className="nav-button" onClick={() => setNavOn(false)}>
+          ABOUT US
+    </Link>
       </button>
     </li>
   )}
@@ -81,11 +109,9 @@ export default function App() {
       </nav>
 
       {/* Render pages based on state */}
-      {page === 'home' ? (
-        <MainPage onAboutClick={() => handleNavigate('about')} />
-      ) : (
-        <AboutUsPage onBack={() => handleNavigate('home')} />
-      )}
+      <>
+      {location.pathname === "/" ? <MainPage /> : <></>}
+    </>
     </div>
   );
 }
@@ -386,6 +412,16 @@ function MainPage({ onAboutClick }) {
   {success && <p style={{ color: 'green' }}>Request sent successfully! We will contact you shortly.</p>}
   {error && <p style={{ color: 'red' }}>{error}</p>}
 </form>
+  <div className="terms-of-policy">
+      <p className="terms-text">
+    By providing your phone number, you agree to receive SMS messages from Primeus.
+    Message frequency varies. Message & data rates may apply. 
+  </p>
+  <div>
+    <a href="/privacy-policy">Privacy Policy</a> |
+    <a href="/terms-and-conditions">Terms & Conditions</a>
+  </div>
+  </div>
         </div>
       </section>
 
@@ -408,21 +444,20 @@ function AboutUsPage({ onBack }) {
   return (
     <main className="page">
       <section className="about-section-with-bg">
-  <div className="overlay">
-    <h2 className="about_us-title">About Us</h2>
-    <p className="about-text">
-      At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
-      <br /><br />
-      With a strong focus on safety, punctuality, and customer satisfaction, our experienced team and modern fleet ensure your cargo is handled with the utmost care from pickup to delivery. Whether you require general freight transportation or customized logistics support, we tailor our services to optimize your supply chain and reduce operational complexities.
-      <br /><br />
-      We believe that transportation is more than just moving goods — it’s about building lasting partnerships based on trust, transparency, and professionalism. Our commitment to compliance and industry best practices means you can count on us for dependable service every step of the way.
-      <br /><br />
-      Choose Prime Us, Inc. for your logistics needs — where your freight is our priority.
-    </p>
-    <button className="btn btn-secondary" onClick={onBack}>Back to Home</button>
-  </div>
-</section>
-
+        <div className="overlay">
+          <h2 className="about_us-title">About Us</h2>
+          <p className="about-text">
+            At Prime Us, Inc. (MC# 1414581), we are committed to delivering excellence in logistics and transportation services across the United States. Since our inception in 2022, we have been dedicated to providing reliable, efficient, and secure freight solutions that meet the evolving needs of our clients.
+            <br /><br />
+            With a strong focus on safety, punctuality, and customer satisfaction, our experienced team and modern fleet ensure your cargo is handled with the utmost care from pickup to delivery. Whether you require general freight transportation or customized logistics support, we tailor our services to optimize your supply chain and reduce operational complexities.
+            <br /><br />
+            We believe that transportation is more than just moving goods — it’s about building lasting partnerships based on trust, transparency, and professionalism. Our commitment to compliance and industry best practices means you can count on us for dependable service every step of the way.
+            <br /><br />
+            Choose Prime Us, Inc. for your logistics needs — where your freight is our priority.
+          </p>
+        </div>
+        
+      </section>
     </main>
   );
 }
