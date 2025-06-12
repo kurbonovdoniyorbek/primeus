@@ -414,12 +414,9 @@ function MainPage({ onAboutClick }) {
 </form>
   <div className="terms-of-policy">
      <p className="terms-text">
-  By opting into SMS from this form, you are agreeing to receive SMS messages from Primeus.
-  This includes SMS messages for appointment scheduling, reminders, updates, and billing notifications.
-  Message frequency varies. Message and data rates may apply. 
-  See our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and 
-  <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer"> Terms & Conditions</a>.
-  Reply STOP to opt out. Text HELP for assistance.
+By texting Prime us Incorporated  at +1 630 538 4723, you agree to receive Customer care, Marketing, and Account Notification messages from prime us incorporated. Reply STOP to opt-out; Reply HELP for support; Message & data rates may apply; Messaging frequency may vary. Visit  
+  See our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> 
+  
 </p>
   </div>
         </div>
