@@ -413,14 +413,14 @@ function MainPage({ onAboutClick }) {
   {error && <p style={{ color: 'red' }}>{error}</p>}
 </form>
   <div className="terms-of-policy">
-      <p className="terms-text">
-    By providing your phone number, you agree to receive SMS messages from Primeus.
-    Message frequency varies. Message & data rates may apply. 
-  </p>
-  <div>
-    <a href="/privacy-policy">Privacy Policy</a> |
-    <a href="/terms-and-conditions">Terms & Conditions</a>
-  </div>
+     <p className="terms-text">
+  By opting into SMS from this form, you are agreeing to receive SMS messages from Primeus.
+  This includes SMS messages for appointment scheduling, reminders, updates, and billing notifications.
+  Message frequency varies. Message and data rates may apply. 
+  See our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and 
+  <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer"> Terms & Conditions</a>.
+  Reply STOP to opt out. Text HELP for assistance.
+</p>
   </div>
         </div>
       </section>
