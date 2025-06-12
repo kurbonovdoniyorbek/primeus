@@ -251,9 +251,9 @@ function MainPage({ onAboutClick }) {
           </p>
           <div className="hero-buttons">
             <a href="#contact" className="btn btn-primary">Contact us</a>
-     <a href="/about"  onClick={() => handleNavigate('about')} className="btn btn-secondary">About Us</a>
+     <a href="/aboutus"  onClick={() => handleNavigate('aboutus') }  className="btn btn-secondary">About Us</a>
 
-            
+      
           </div>
         </div>
       </section>
